@@ -9,8 +9,8 @@ subroutine writepart
 !
  character(4) :: nastore
 !
- if (masterproc) write(*,*) 'Storing part', istore,'at time', telaps
- write(nastore,1004) istore
+ if (masterproc) write(*,*) 'Storing part', istore_part, 'at time', telaps
+ write(nastore,1004) istore_part
  1004 format(I4.4)
 !
  if (masterproc) then
