@@ -37,8 +37,8 @@
  restart   num_iter   cfl   dt_control  print_control  io_type
    0     1    .8       10       10      2
       
- Mach      Reynolds (friction)  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
-  1.5         220.           0.        2          300.                 0.75
+ Mach      Reynolds (friction)  Stokes  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
+  1.5         220.     10.       0.        2          300.                 0.75
   
  stat_control  xstat_num
   250      0

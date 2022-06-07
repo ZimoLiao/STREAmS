@@ -40,6 +40,8 @@ subroutine solver
 !
   call rk() ! Third-order RK scheme
 !
+  call part() ! First-order explicit scheme (particles)
+!
   if (io_type>0) call manage_solver()
 !
   if (mod(i,nprint)==0) then

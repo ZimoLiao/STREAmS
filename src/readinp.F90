@@ -9,6 +9,7 @@ subroutine readinp
  integer :: ibc_inflow
  real(mykind) :: turb_inflow
 !
+!       stpart:         particle Stokes number
 !
 ! iflow = 0 ==> Channel flow
 !
@@ -35,7 +36,7 @@ subroutine readinp
  read (12,*) idiski, ncyc, cfl, nstep, nprint, io_type
  read (12,*)
  read (12,*)
- read (12,*) rm, retauinflow, trat, visc_type, tref_dimensional, turb_inflow
+ read (12,*) rm, retauinflow, stpart, trat, visc_type, tref_dimensional, turb_inflow
  read (12,*)
  read (12,*)
  read (12,*) istat, nstat

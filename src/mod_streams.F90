@@ -65,7 +65,7 @@ module mod_streams
  real(mykind), parameter :: ggmopr = gamma*gm/pr
  real(mykind), parameter :: vtexp  = 3._mykind/4._mykind
  real(mykind), parameter :: rfac   = 0.89_mykind !pr**(1._mykind/3._mykind)
- real(mykind) :: rm,re,taw,sqgmr,s2tinf,retauinflow,trat,twall,tref_dimensional
+ real(mykind) :: rm,re,taw,sqgmr,s2tinf,retauinflow,stpart,trat,twall,tref_dimensional
  real(mykind) :: rtrms
  real(mykind), dimension(0:nsolmax) :: tsol, tsol_restart
  real(mykind) :: dtsave, dtsave_restart

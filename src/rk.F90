@@ -161,7 +161,6 @@ subroutine rk
   call fail_input("CUDA ERROR! Try to reduce the number of Euler threads in cuda_definitions.h: "//cudaGetErrorString(iercuda))
  endif
 #endif
-!
   alpdtold  = alpdt 
   dfupdated = .false.
 !
