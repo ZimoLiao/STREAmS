@@ -12,6 +12,7 @@ subroutine init
  ncyc0          = 0         ! number of cycles is set to zero
  istore         = 1         ! index of the first solution to store
  istore_restart = 1         ! index of the first solution to store restart
+ istore_part    = 0         ! index of the first solution to store particles
  telaps0        = 0._mykind ! time counter is set to zero
  stat_io        = 'rewind'  ! I/O status
 !

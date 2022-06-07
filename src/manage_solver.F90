@@ -3,19 +3,21 @@ subroutine manage_solver
  use mod_streams
  implicit none
 !
- logical :: updatestat,savefield,saverst
+ logical :: updatestat,savefield,saverst,savepart
 !
 !call write_wallpressure
 !
  updatestat = .false.
  savefield  = .false.
  saverst    = .false.
+ savepart   = .false.
 !
  if (mod(icyc,istat)==0) updatestat = .true.
  if (telaps>tsol(istore)) savefield = .true.
  if (telaps>tsol_restart(istore_restart)) saverst = .true.
+ if (telaps>tsol_part(istore_part)) savepart = .true.
 !
- if (updatestat.or.savefield.or.saverst) then
+ if (updatestat.or.savefield.or.saverst.or.savepart) then ! TODO: optimize (only copy particles)
   if (xrecyc>0._mykind) call recyc
   call updateghost()
   call prims()
@@ -37,8 +39,12 @@ subroutine manage_solver
   if (enable_plot3d>0) call writefield()
   if (enable_vtk>0) call writefieldvtk()
   if (iflow>0) call writestatzbl()
-  call writepart() ! ADD(lzmo): TODO: enable option
   istore = istore+1
+ endif
+!
+ if (savepart) then
+  call writepart() ! ADD(lzmo): TODO: enable option
+  istore_part = istore_part+1
  endif
 !
  if (saverst) then
@@ -59,7 +65,7 @@ subroutine manage_solver
   istore_restart = istore_restart+1
  endif
 !
- if (updatestat.or.savefield.or.saverst) then
+ if (updatestat.or.savefield.or.saverst.or.savepart) then
   call reset_cpu_gpu()
  endif
 !

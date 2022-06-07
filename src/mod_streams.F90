@@ -67,11 +67,11 @@ module mod_streams
  real(mykind), parameter :: rfac   = 0.89_mykind !pr**(1._mykind/3._mykind)
  real(mykind) :: rm,re,taw,sqgmr,s2tinf,retauinflow,stpart,trat,twall,tref_dimensional
  real(mykind) :: rtrms
- real(mykind), dimension(0:nsolmax) :: tsol, tsol_restart
- real(mykind) :: dtsave, dtsave_restart
+ real(mykind), dimension(0:nsolmax) :: tsol, tsol_restart, tsol_part
+ real(mykind) :: dtsave, dtsave_restart, dtsave_part
  integer :: iflow
  integer :: idiski, ndim
- integer :: istore, istore_restart 
+ integer :: istore, istore_restart, istore_part
  integer :: iorder,iweno
  integer :: visc_type
  real(mykind) :: tresduc

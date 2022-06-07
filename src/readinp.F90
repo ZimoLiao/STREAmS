@@ -48,7 +48,7 @@ subroutine readinp
  read (12,*) (xstat(l),l=1,nstat)
  read (12,*)
  read (12,*)
- read (12,*) dtsave, dtsave_restart, enable_plot3d, enable_vtk
+ read (12,*) dtsave, dtsave_restart, dtsave_part, enable_plot3d, enable_vtk
  read (12,*)
  read (12,*)
  read (12,*) rand_start
@@ -101,6 +101,7 @@ subroutine readinp
  do l=0,nsolmax
   tsol(l)         = l*dtsave
   tsol_restart(l) = l*dtsave_restart
+  tsol_part(l)    = l*dtsave_part
  enddo
 !
 end subroutine readinp

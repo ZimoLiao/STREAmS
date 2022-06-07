@@ -32,6 +32,7 @@ subroutine setup
  call checkdt()
 !===================================================
  call writepart()
+ istore_part = istore_part+1
 !===================================================
 !
 end subroutine setup

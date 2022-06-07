@@ -35,7 +35,7 @@
   1.2      50.     8.        0.
       
  restart   num_iter   cfl   dt_control  print_control  io_type
-   0     10000    .8       10       10      2
+   0     100000    .8       10       10      2
       
  Mach      Reynolds (friction)  Stokes  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
   1.5         220.     1.       0.        2          300.                 0.75
@@ -46,8 +46,8 @@
  xstat_list
    10. 20. 25.
  
- dtsave dtsave_restart  enable_plot3d   enable_vtk
-  2.       50.                1              0
+ dtsave dtsave_restart dtsave_part enable_plot3d   enable_vtk
+  10.       50.       2.         1              0
 
   rand_type
    -1
