@@ -1,11 +1,11 @@
 subroutine writepart
 !
-! Writing particles part.dat TODO: binary output
+! Writing particle positions and velocities
 !
  use mod_streams
  implicit none
 !
- integer :: i
+ integer :: ind
 !
  character(4) :: nastore
 !
@@ -17,13 +17,26 @@ subroutine writepart
 !
   write(*,*)  'Writing part'
 !
-  open(unit=10,file='plotpart_'//nastore//'.dat',form='formatted')
-  write(10,*) 'variables = x y z up vp wp'
-  write(10,*) 'zone i=',npart
-  write(10,*) 'solutiontime=',telaps
-  do i=1,npart
-   write(10,100) xpart(i),ypart(i),zpart(i),upart(i),vpart(i),wpart(i)
-  100     format(20ES20.10)
+! 1D function file (PLOT3D)
+  open(unit=10,file='part_'//nastore//'.bin',form='unformatted')
+  write(10) npart,6
+  do ind=1,npart
+   write(10) xpart(ind)
+  enddo
+  do ind=1,npart
+   write(10) ypart(ind)
+  enddo
+  do ind=1,npart
+   write(10) zpart(ind)
+  enddo
+  do ind=1,npart
+   write(10) upart(ind)
+  enddo
+  do ind=1,npart
+   write(10) vpart(ind)
+  enddo
+  do ind=1,npart
+   write(10) wpart(ind)
   enddo
   close(10)
 !
