@@ -6,7 +6,7 @@ subroutine part
  use mod_streams
  implicit none
 
- integer :: i,j,k
+ integer :: ind
  integer :: il,jl,kl,ir,jr,kr
  real(mykind) :: ip,jp,kp,iq,jq,kq
  real(mykind) :: uatpart,vatpart,watpart
@@ -20,25 +20,25 @@ subroutine part
  endif
 
  !$cuf kernel do(1) <<<*,*>>> 
-  do i=1,npart
+  do ind=1,npart
    ! nearby 
    do ir=1,nx
-    if (xpart_gpu(i)<x_gpu(ir)) exit
+    if (xpart_gpu(ind)<x_gpu(ir)) exit
    enddo
    do jr=1,ny
-    if (ypart_gpu(i)<y_gpu(jr)) exit
+    if (ypart_gpu(ind)<y_gpu(jr)) exit
    enddo
    do kr=1,nz
-    if (zpart_gpu(i)<z_gpu(kr)) exit
+    if (zpart_gpu(ind)<z_gpu(kr)) exit
    enddo
    il=ir-1
    jl=jr-1
    kl=kr-1
 
    ! flow velocity interpolation (tri-linear)
-   ip=xpart_gpu(i)-x_gpu(il)
-   jp=xpart_gpu(j)-x_gpu(jl)
-   kp=xpart_gpu(k)-x_gpu(kl)
+   ip=xpart_gpu(ind)-x_gpu(il)
+   jp=ypart_gpu(ind)-y_gpu(jl)
+   kp=zpart_gpu(ind)-z_gpu(kl)
    iq=1.0_mykind-ip
    jq=1.0_mykind-jp
    kq=1.0_mykind-kp
@@ -48,13 +48,13 @@ subroutine part
    watpart=ip*jp*kp*wv_gpu(ir,jr,kr,4)+iq*jp*kp*wv_gpu(il,jr,kr,4)+ip*jq*kp*wv_gpu(ir,jl,kr,4)+iq*jq*kp*wv_gpu(il,jl,kr,4)+ip*jp*kq*wv_gpu(ir,jr,kl,4)+iq*jp*kq*wv_gpu(il,jr,kl,4)+ip*jq*kq*wv_gpu(ir,jl,kl,4)+iq*jq*kq*wv_gpu(il,jl,kl,4)
 
    ! time advancing
-   xpart_gpu(i) = xpart_gpu(i)+dt*upart_gpu(i)
-   ypart_gpu(i) = ypart_gpu(i)+dt*vpart_gpu(i)
-   zpart_gpu(i) = zpart_gpu(i)+dt*wpart_gpu(i)
+   xpart_gpu(ind) = xpart_gpu(ind)+dt*upart_gpu(ind)
+   ypart_gpu(ind) = ypart_gpu(ind)+dt*vpart_gpu(ind)
+   zpart_gpu(ind) = zpart_gpu(ind)+dt*wpart_gpu(ind)
    
-   upart_gpu(i) = upart_gpu(i)+dt*(uatpart-upart_gpu(i))/stpart
-   vpart_gpu(i) = vpart_gpu(i)+dt*(vatpart-vpart_gpu(i))/stpart
-   wpart_gpu(i) = wpart_gpu(i)+dt*(watpart-wpart_gpu(i))/stpart
+   upart_gpu(ind) = upart_gpu(ind)+dt*(uatpart-upart_gpu(ind))/stpart
+   vpart_gpu(ind) = vpart_gpu(ind)+dt*(vatpart-vpart_gpu(ind))/stpart
+   wpart_gpu(ind) = wpart_gpu(ind)+dt*(watpart-wpart_gpu(ind))/stpart
   enddo
  !@cuf iercuda=cudaDeviceSynchronize()
 !

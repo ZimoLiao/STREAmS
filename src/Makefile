@@ -4,7 +4,7 @@
 # SUPPORTED PRECISIONS (PREC) : single, double [default=double]
 #----------------------------------------------------------------------
 COMPILE = "pgi-cuda"
-MODE    = "debug"
+MODE    = "opt"
 PREC    = "double"
 #----------------------------------------------------------------------
 ifeq (${PREC},"single") # mpif90 shipped with PGI compiler
