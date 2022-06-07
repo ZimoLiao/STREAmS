@@ -18,7 +18,9 @@ subroutine part
  else
   dt = dtmin
  endif
-
+!
+! integration
+!
  !$cuf kernel do(1) <<<*,*>>> 
   do ind=1,npart
    ! nearby 
@@ -58,4 +60,29 @@ subroutine part
   enddo
  !@cuf iercuda=cudaDeviceSynchronize()
 !
+! boundary conditions
+!
+ if (iflow==0) ! channel
+ !$cuf kernel do(1) <<<*,*>>> 
+  do ind=1,npart
+    
+    xpart_gpu(ind) = mod(xpart_gpu(ind),rlx)
+    zpart_gpu(ind) = mod(zpart_gpu(ind),rlz)
+
+    if (xpart_gpu(ind)<0) xpart_gpu(ind) = xpart_gpu(ind)+rlx ! periodic in x-/z-directions
+    if (zpart_gpu(ind)<0) zpart_gpu(ind) = zpart_gpu(ind)+rlz
+    
+    if (ypart_gpu(ind)<-rly*0.5) then ! reflective boundary (non physical)
+     ypart_gpu(ind) = -rly-ypart_gpu(ind)
+     vpart_gpu(ind) = -vpart_gpu(ind)
+    elseif (ypart_gpu(ind)>rly*0.5)
+     ypart_gpu(ind) = rly-ypart_gpu(ind)
+     vpart_gpu(ind) = -vpart_gpu(ind)
+    endif
+
+  enddo
+ !@cuf iercuda=cudaDeviceSynchronize()
+ elseif (iflow==1)
+
+ endif
 end subroutine part
