@@ -20,7 +20,7 @@
  12.5663706143592  2.  6.283185307179586
  
  Nx     Ny     Nz     Np
-  384    192    256    262144
+  384    192    256    320000
  
  Ny_wr     Ly_wr      dy+_w  jbgrid
   150       2.5         1.        0
@@ -35,10 +35,10 @@
   1.2      50.     8.        0.
       
  restart   num_iter   cfl   dt_control  print_control  io_type
-   0     10000    .8       10       10      2
+   0     200000    .8       10       10      2
       
  Mach      Reynolds (friction)  Stokes  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
-  1.5         220.     1.       0.        2          300.                 0.75
+  1.5         182.     1.       0.        2          300.                 0.75
   
  stat_control  xstat_num
   250      0
@@ -47,7 +47,7 @@
    10. 20. 25.
  
  dtsave dtsave_restart  enable_plot3d   enable_vtk
-  2.       50.                1              0
+  20.       20.                1              0
 
   rand_type
    -1
