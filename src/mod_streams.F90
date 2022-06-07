@@ -50,6 +50,8 @@ module mod_streams
  integer :: ngdf ! Number of ghost nodes for digital filtering
  integer :: io_type
 !
+ integer :: npart ! Number of particles
+!
  integer :: enable_plot3d, enable_vtk
 !
 ! Useful code variables
@@ -100,6 +102,12 @@ module mod_streams
  real(mykind), dimension(:,:,:), allocatable :: temperature
  real(mykind), dimension(:,:,:), allocatable :: temperature_gpu
  logical, dimension(:,:,:), allocatable :: ducros,ducros_gpu
+!
+! Vector of particle positions and velocities
+ real(mykind), dimension(:), allocatable :: xpart,ypart,zpart
+ real(mykind), dimension(:), allocatable :: upart,vpart,wpart
+ real(mykind), dimension(:), allocatable :: xpart_gpu,ypart_gpu,zpart_gpu
+ real(mykind), dimension(:), allocatable :: upart_gpu,vpart_gpu,wpart_gpu
 ! 
 ! RK data
  real(mykind), dimension(3) :: gamvec,rhovec
@@ -216,6 +224,8 @@ module mod_streams
 !
  integer :: local_comm, mydev
  attributes(device) :: w_gpu,fl_gpu,fln_gpu
+ attributes(device) :: xpart_gpu,ypart_gpu,zpart_gpu ! particle positions
+ attributes(device) :: upart_gpu,vpart_gpu,wpart_gpu ! particle velocities
  attributes(device) :: temperature_gpu,ducros_gpu
  attributes(device) :: dcsidx_gpu,dcsidx2_gpu,dcsidxs_gpu
  attributes(device) :: detady_gpu,detady2_gpu,detadys_gpu

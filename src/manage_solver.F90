@@ -37,6 +37,7 @@ subroutine manage_solver
   if (enable_plot3d>0) call writefield()
   if (enable_vtk>0) call writefieldvtk()
   if (iflow>0) call writestatzbl()
+  call writepart() ! ADD(lzmo): TODO: enable option
   istore = istore+1
  endif
 !

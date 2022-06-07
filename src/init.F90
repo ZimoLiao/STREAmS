@@ -6,6 +6,7 @@ subroutine init
  implicit none
 !
  integer :: i,j,k,m
+ real(mykind), dimension(3) :: rr
 !
  dfupdated      = .true.
  ncyc0          = 0         ! number of cycles is set to zero
@@ -27,6 +28,25 @@ subroutine init
  enddo
  ducros = .false.
  if (tresduc<=0._mykind) ducros = .true.
+!
+! Particle initialization (random distribution and zero velocity)
+!
+ do i=1:npart
+  call random_number(rr)
+
+  xpart(i) = rlx*rr(1)
+  zpart(i) = rlz*rr(3)
+
+  if(iflow == 0) then
+   ypart(i) = rly*(rr(2)-0.5)
+  else
+   ypart(i) = rly*rr(2)
+  endif
+
+  upart(i) = 0._mykind
+  vpart(i) = 0._mykind
+  wpart(i) = 0._mykind
+ enddo
 !
  if (idiski>=1) then
 !

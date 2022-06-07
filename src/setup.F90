@@ -31,5 +31,7 @@ subroutine setup
  call init()
  call checkdt()
 !===================================================
+ call writepart()
+!===================================================
 !
 end subroutine setup

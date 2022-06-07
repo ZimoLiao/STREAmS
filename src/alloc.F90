@@ -15,6 +15,14 @@ subroutine allocate_vars()
  allocate(w_gpu(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng,nv))
  allocate(fl_gpu(nx,ny,nz,nv))
  allocate(fln_gpu(nx,ny,nz,nv))
+!
+ allocate(xpart_gpu(1:npart))
+ allocate(ypart_gpu(1:npart))
+ allocate(zpart_gpu(1:npart))
+ allocate(upart_gpu(1:npart))
+ allocate(vpart_gpu(1:npart))
+ allocate(wpart_gpu(1:npart))
+!
  allocate(temperature_gpu(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(ducros_gpu(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(wmean_gpu(nv,1-ng:nx+1+ng,ny))
@@ -115,6 +123,14 @@ subroutine allocate_vars()
  allocate(w(nv,1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(fl(nx,ny,nz,nv))
  allocate(fln(nx,ny,nz,nv))
+!
+ allocate(xpart(1:npart))
+ allocate(ypart(1:npart))
+ allocate(zpart(1:npart))
+ allocate(upart(1:npart))
+ allocate(vpart(1:npart))
+ allocate(wpart(1:npart))
+!
  allocate(temperature(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(ducros(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(wmean(nv,1-ng:nx+1+ng,ny))
@@ -236,6 +252,14 @@ subroutine copy_cpu_to_gpu()
 !
 #ifdef USE_CUDA
  w_gpu            = w_order
+!
+ xpart_gpu        = xpart
+ ypart_gpu        = ypart
+ zpart_gpu        = zpart
+ upart_gpu        = upart
+ vpart_gpu        = vpart
+ wpart_gpu        = wpart
+!
 !fl_gpu           = fl
 !fln_gpu          = fln
 !temperature_gpu  = temperature
@@ -347,6 +371,14 @@ subroutine copy_gpu_to_cpu
 !
 #ifdef USE_CUDA
  w_order = w_gpu
+!
+ xpart   = xpart_gpu
+ ypart   = ypart_gpu
+ zpart   = zpart_gpu
+ upart   = upart_gpu
+ vpart   = vpart_gpu
+ wpart   = wpart_gpu
+!
  temperature = temperature_gpu
  vf_df = vf_df_gpu
 #else

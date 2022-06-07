@@ -49,7 +49,7 @@ subroutine startmpi
  read (12,*) rlx,rly,rlz
  read (12,*)
  read (12,*)
- read (12,*) nxmax,nymax,nzmax
+ read (12,*) nxmax,nymax,nzmax,npart ! ADD(lzmo): number of particles
  read (12,*)
  read (12,*)
  read (12,*) nymaxwr,rlywr,dyp_target,jbgrid
