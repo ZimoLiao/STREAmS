@@ -47,7 +47,7 @@
    10. 20. 25. 30. 35. 40. 45. 50. 55.
  
  dtsave dtsave_restart  enable_plot3d   enable_vtk
-  50.       50.                1            1
+  50.       50.                1            0
 
   rand_type
    -1

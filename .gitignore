@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Output data
+!input.dat
+*.dat
+*.prof
+*.q
+*.vtr
+*.xyz
+*.bin
+dt_limitations

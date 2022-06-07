@@ -38,7 +38,7 @@
     0       30000    .8        10           10            2
       
   Mach      Reynolds (friction)  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
-   0.2        180.                  0.            1            273.15            0.75
+   0.2        180.                  0.            2            273.15            0.75
   
  stat_control  xstat_num
     250           0
@@ -47,7 +47,7 @@
    10. 20. 25.
  
  dtsave    dtsave_restart  enable_plot3d   enable_vtk
-  50.           50.              1              1
+  50.           50.              1              0
 
   rand_type
    -1
