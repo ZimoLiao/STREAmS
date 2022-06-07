@@ -62,7 +62,7 @@ subroutine part
 !
 ! boundary conditions
 !
- if (iflow==0) ! channel
+ if (iflow==0) then ! channel
  !$cuf kernel do(1) <<<*,*>>> 
   do ind=1,npart
     
@@ -75,14 +75,14 @@ subroutine part
     if (ypart_gpu(ind)<-rly*0.5) then ! reflective boundary (non physical)
      ypart_gpu(ind) = -rly-ypart_gpu(ind)
      vpart_gpu(ind) = -vpart_gpu(ind)
-    elseif (ypart_gpu(ind)>rly*0.5)
+    elseif (ypart_gpu(ind)>rly*0.5) then
      ypart_gpu(ind) = rly-ypart_gpu(ind)
      vpart_gpu(ind) = -vpart_gpu(ind)
     endif
 
   enddo
  !@cuf iercuda=cudaDeviceSynchronize()
- elseif (iflow==1)
+ elseif (iflow==1) then
 
  endif
 end subroutine part
