@@ -31,7 +31,7 @@ subroutine init
 !
 ! Particle initialization (random distribution and zero velocity)
 !
- do i=1:npart
+ do i=1,npart
   call random_number(rr)
 
   xpart(i) = rlx*rr(1)

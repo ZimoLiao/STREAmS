@@ -3,8 +3,8 @@
 # SUPPORTED MODES  : opt, debug [default=debug]
 # SUPPORTED PRECISIONS (PREC) : single, double [default=double]
 #----------------------------------------------------------------------
-COMPILE = "gnu"
-MODE    = "opt"
+COMPILE = "pgi-cuda"
+MODE    = "debug"
 PREC    = "double"
 #----------------------------------------------------------------------
 ifeq (${PREC},"single") # mpif90 shipped with PGI compiler
@@ -32,19 +32,19 @@ ifeq (${COMPILE},"pgi-cuda") # mpif90 shipped with PGI compiler
 #   FC = mpipgifort
     FC = mpif90
     ifeq (${MODE},"opt") 
-        #OLEVEL = -O3 -Mcuda=ccall,cuda10.2,ptxinfo -DUSE_CUDA -DCUDA_ASYNC #-DNOCUDAAWAREMPI
-        OLEVEL = -O3 -Mcuda=ccall,cuda10.2 -DUSE_CUDA -DCUDA_ASYNC #-DNOCUDAAWAREMPI
+        #OLEVEL = -O3 -Mcuda=ccall,cuda11.3,ptxinfo -DUSE_CUDA -DCUDA_ASYNC #-DNOCUDAAWAREMPI
+        OLEVEL = -O3 -Mcuda=ccall,cuda11.3 -DUSE_CUDA -DCUDA_ASYNC #-DNOCUDAAWAREMPI
     else
-        OLEVEL = -Mcuda=ccall,cuda10.2 -DUSE_CUDA -DCUDA_ASYNC
+        OLEVEL = -Mcuda=ccall,cuda11.3 -DUSE_CUDA -DCUDA_ASYNC
     endif
 endif
 
 ifeq (${COMPILE},"pgi-cuda-sync") # mpif90 shipped with PGI compiler
     FC = mpif90 
     ifeq (${MODE},"opt") 
-        OLEVEL = -O3 -Mcuda=ccall,cuda10.2 -DUSE_CUDA
+        OLEVEL = -O3 -Mcuda=ccall,cuda11.3 -DUSE_CUDA
     else
-        OLEVEL = -Mcuda=ccall,cuda10.2 -DUSE_CUDA
+        OLEVEL = -Mcuda=ccall,cuda11.3 -DUSE_CUDA
     endif
 endif
 
