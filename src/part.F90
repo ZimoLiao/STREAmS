@@ -11,6 +11,7 @@ subroutine part
  real(mykind) :: ip,jp,kp,iq,jq,kq
  real(mykind) :: uatpart,vatpart,watpart
  real(mykind) :: dt
+ real(mykind) :: ry,rz
  
 ! TODO: consider time step for particle advancing carefully
  if (cfl>0._mykind) then
@@ -66,10 +67,9 @@ subroutine part
  !$cuf kernel do(1) <<<*,*>>> 
   do ind=1,npart
     
-    xpart_gpu(ind) = mod(xpart_gpu(ind),rlx)
+    xpart_gpu(ind) = mod(xpart_gpu(ind),rlx) ! periodic in x-/z-directions
+    if (xpart_gpu(ind)<0) xpart_gpu(ind) = xpart_gpu(ind)+rlx
     zpart_gpu(ind) = mod(zpart_gpu(ind),rlz)
-
-    if (xpart_gpu(ind)<0) xpart_gpu(ind) = xpart_gpu(ind)+rlx ! periodic in x-/z-directions
     if (zpart_gpu(ind)<0) zpart_gpu(ind) = zpart_gpu(ind)+rlz
     
     if (ypart_gpu(ind)<-rly*0.5) then ! reflective boundary (non physical)
@@ -82,7 +82,39 @@ subroutine part
 
   enddo
  !@cuf iercuda=cudaDeviceSynchronize()
- elseif (iflow==1) then
+ elseif (iflow==1) then ! boundary-layer
+ !$cuf kernel do(1) <<<*,*>>> 
+  do ind=1,npart
 
+    zpart_gpu(ind) = mod(zpart_gpu(ind),rlz) ! periodic in z-directions
+    if (zpart_gpu(ind)<0) zpart_gpu(ind) = zpart_gpu(ind)+rlz
+
+    if (ypart_gpu(ind)<0) then ! reflective boundary (non physical)
+      ypart_gpu(ind) = -ypart_gpu(ind)
+      vpart_gpu(ind) = -vpart_gpu(ind)
+    endif
+
+    ! recycling boundary
+    if (ypart_gpu(ind)>rly.or.xpart_gpu(ind)>rlx.or.xpart_gpu(ind)<0) then
+      xpart_gpu(ind)=x_gpu(1)
+      ypart_gpu(ind)=random_number(ry)*rly ! TODO: check ramdom number
+      zpart_gpu(ind)=random_number(rz)*rlz
+
+      ! set particle velocity equal to nearby flow velocity approximately
+      do jr=1,ny
+        if (ypart_gpu(ind)<y_gpu(jr)) exit
+      enddo
+      do kr=1,nz
+        if (zpart_gpu(ind)<z_gpu(kr)) exit
+      enddo
+
+      upart_gpu(ind)=wv_gpu(1,jr,kr,2)
+      vpart_gpu(ind)=wv_gpu(1,jr,kr,3)
+      wpart_gpu(ind)=wv_gpu(1,jr,kr,4)
+
+    endif 
+
+  enddo
+ !@cuf iercuda=cudaDeviceSynchronize()
  endif
 end subroutine part

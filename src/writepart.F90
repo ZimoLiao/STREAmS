@@ -15,29 +15,24 @@ subroutine writepart
 !
  if (masterproc) then
 !
-  write(*,*)  'Writing part'
-!
-! 1D function file (PLOT3D)
+! write binary file
   open(unit=10,file='part_'//nastore//'.bin',form='unformatted')
-  write(10) npart,6
+  write(10) telaps ! solution time
+  write(10) npart ! number of particles
   do ind=1,npart
-   write(10) xpart(ind)
+   write(10) xpart(ind),ypart(ind),zpart(ind),upart(ind),vpart(ind),wpart(ind)
   enddo
+  close(10)
+!
+! write tecplot ascii file
+  open(unit=10,file='part_'//nastore//'.dat',form='formatted')
+  write(10,*) 'variables = x y z up vp wp'
+  write(10,*) 'zone i = ',npart
+  write(10,*) 'solutiontime = ',telaps
   do ind=1,npart
-   write(10) ypart(ind)
-  enddo
-  do ind=1,npart
-   write(10) zpart(ind)
-  enddo
-  do ind=1,npart
-   write(10) upart(ind)
-  enddo
-  do ind=1,npart
-   write(10) vpart(ind)
-  enddo
-  do ind=1,npart
-   write(10) wpart(ind)
-  enddo
+   write(10,100) xpart(ind),ypart(ind),zpart(ind),upart(ind),vpart(ind),wpart(ind)
+  100 format(20ES20.10)
+  enddo 
   close(10)
 !
  endif
