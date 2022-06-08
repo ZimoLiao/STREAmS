@@ -116,6 +116,7 @@ module mod_streams
 !
 ! Random map for particle recycling
  integer :: nrand, irand
+ integer, parameter :: irand_reset = 50 ! random parameters reset interval
  real(mykind), dimension(:), allocatable :: randy,randz,randy_gpu,randz_gpu
 !
 ! Coordinates and metric related quantities 
@@ -228,8 +229,12 @@ module mod_streams
 !
  integer :: local_comm, mydev
  attributes(device) :: w_gpu,fl_gpu,fln_gpu
+!
+ attributes(device) :: randy_gpu,randz_gpu
+!
  attributes(device) :: xpart_gpu,ypart_gpu,zpart_gpu ! particle positions
  attributes(device) :: upart_gpu,vpart_gpu,wpart_gpu ! particle velocities
+!
  attributes(device) :: temperature_gpu,ducros_gpu
  attributes(device) :: dcsidx_gpu,dcsidx2_gpu,dcsidxs_gpu
  attributes(device) :: detady_gpu,detady2_gpu,detadys_gpu

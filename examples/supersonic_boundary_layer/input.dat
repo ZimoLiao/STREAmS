@@ -1,0 +1,53 @@
+!=============================================================
+!
+! ███████╗████████╗██████╗ ███████╗ █████╗ ███╗   ███╗███████╗
+! ██╔════╝╚══██╔══╝██╔══██╗██╔════╝██╔══██╗████╗ ████║██╔════╝
+! ███████╗   ██║   ██████╔╝█████╗  ███████║██╔████╔██║███████╗
+! ╚════██║   ██║   ██╔══██╗██╔══╝  ██╔══██║██║╚██╔╝██║╚════██║
+! ███████║   ██║   ██║  ██║███████╗██║  ██║██║ ╚═╝ ██║███████║
+! ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
+!
+! Supersonic TuRbulEnt Accelerated navier stokes Solver
+!
+! input file
+!
+!=============================================================
+
+ flow_type (0==>channel, 1==>BL, 2==>SBLI)
+   1   
+
+  Lx             Ly         Lz
+   30.          6.25          3.
+ 
+  Nx     Ny     Nz	Np
+  684   228     116	320000
+ 
+ Ny_wr     Ly_wr      dy+_w  jbgrid
+  168       2.2        0.8         0
+
+ ng  visc_ord  ep_ord  weno_par (1==>ord_1,2==>ord_3, 3==>ord_5, 4==>ord_7)
+  3     6      6       3
+ 
+ MPI_x_split     MPI_z_split
+    1          1
+
+ sensor_threshold   xshock_imp   deflec_shock    pgrad (0==>constant bulk)
+  0.1      50.     8.    0.
+      
+ restart   num_iter   cfl   dt_control  print_control  io_type
+   0     200000   .9     1       10        2
+      
+ Mach      Reynolds (friction)	Stokes  temp_ratio   visc_type   Tref (dimensional)   turb_inflow
+ 1.61      300.		1.0          1.0          2           194.3                 -25.0
+  
+ stat_control  xstat_num
+  250      9
+
+ xstat_list
+  5. 10. 15. 18. 20. 22. 24. 40. 45.
+ 
+ dtsave dtsave_restart	dtsave_part  enable_plot3d   enable_vtk
+  5.       5.		1.                1            0
+
+  rand_type
+   -1

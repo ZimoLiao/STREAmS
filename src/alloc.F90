@@ -23,7 +23,7 @@ subroutine allocate_vars()
  allocate(vpart_gpu(1:npart))
  allocate(wpart_gpu(1:npart))
 !
- nrand=100
+ nrand=npart/nx*irand_reset
  irand=1
  allocate(randy_gpu(1:nrand))
  allocate(randz_gpu(1:nrand))
@@ -261,12 +261,6 @@ subroutine copy_cpu_to_gpu()
 #ifdef USE_CUDA
  w_gpu            = w_order
 !
-! initialization of random numbers
- call random_number(randy)
- call random_number(randz)
- randy_gpu        = randy
- randz_gpu        = randz
-!
  xpart_gpu        = xpart
  ypart_gpu        = ypart
  zpart_gpu        = zpart
@@ -376,6 +370,23 @@ subroutine copy_cpu_to_gpu()
  call move_alloc( weta_inflow  , weta_inflow_gpu )
 #endif
 end subroutine copy_cpu_to_gpu
+
+subroutine copy_cpu_to_gpu_rand
+!
+ use mod_streams
+ implicit none
+!
+#ifdef USE_CUDA
+!
+! initialization of random numbers
+ call random_number(randy)
+ call random_number(randz)
+ randy_gpu        = randy
+ randz_gpu        = randz
+!
+#endif
+!
+end subroutine copy_cpu_to_gpu_rand
 
 subroutine copy_gpu_to_cpu
 !

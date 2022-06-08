@@ -15,6 +15,7 @@ subroutine solver
 !
 !Copy arrays from CPU to GPU or move alloc
  call copy_cpu_to_gpu()
+ call copy_cpu_to_gpu_rand()
 !
  if (masterproc) write(*,*) 'Compute time step'
  dtmin = abs(cfl)
@@ -43,6 +44,10 @@ subroutine solver
   call part() ! First-order explicit scheme (particles)
 !
   if (io_type>0) call manage_solver()
+!
+  if (mod(i,irand_reset)==0) then
+   call copy_cpu_to_gpu_rand() ! reset random parameters for particle recycling
+  endif 
 !
   if (mod(i,nprint)==0) then
    call computeresidual()
