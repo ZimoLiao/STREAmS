@@ -114,6 +114,10 @@ module mod_streams
  real(mykind) :: dtglobal,cfl,dtmin,alpdt,telaps,telaps0,alpdtold
  integer :: icyc,ncyc,ncyc0,nstep,nprint
 !
+! Random map for particle recycling
+ integer :: nrand, irand
+ real(mykind), dimension(:), allocatable :: randy,randz,randy_gpu,randz_gpu
+!
 ! Coordinates and metric related quantities 
  integer :: jbgrid ! Parameter for grid stretching
  real(mykind) :: rlx,rly,rlz,rlywr,dyp_target

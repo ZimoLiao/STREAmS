@@ -23,6 +23,11 @@ subroutine allocate_vars()
  allocate(vpart_gpu(1:npart))
  allocate(wpart_gpu(1:npart))
 !
+ nrand=100
+ irand=1
+ allocate(randy_gpu(1:nrand))
+ allocate(randz_gpu(1:nrand))
+!
  allocate(temperature_gpu(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(ducros_gpu(1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(wmean_gpu(nv,1-ng:nx+1+ng,ny))
@@ -123,6 +128,9 @@ subroutine allocate_vars()
  allocate(w(nv,1-ng:nx+ng,1-ng:ny+ng,1-ng:nz+ng))
  allocate(fl(nx,ny,nz,nv))
  allocate(fln(nx,ny,nz,nv))
+!
+ allocate(randy(1:nrand))
+ allocate(randz(1:nrand))
 !
  allocate(xpart(1:npart))
  allocate(ypart(1:npart))
@@ -252,6 +260,12 @@ subroutine copy_cpu_to_gpu()
 !
 #ifdef USE_CUDA
  w_gpu            = w_order
+!
+! initialization of random numbers
+ call random_number(randy)
+ call random_number(randz)
+ randy_gpu        = randy
+ randz_gpu        = randz
 !
  xpart_gpu        = xpart
  ypart_gpu        = ypart

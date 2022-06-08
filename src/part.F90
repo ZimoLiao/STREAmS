@@ -97,8 +97,8 @@ subroutine part
     ! recycling boundary
     if (ypart_gpu(ind)>rly.or.xpart_gpu(ind)>rlx.or.xpart_gpu(ind)<0) then
       xpart_gpu(ind)=x_gpu(1)
-      ypart_gpu(ind)=random_number(ry)*rly ! TODO: check ramdom number
-      zpart_gpu(ind)=random_number(rz)*rlz
+      ypart_gpu(ind)=randy_gpu(mod(irand,nrand)+1)*rly ! TODO: check ramdom number
+      zpart_gpu(ind)=randz_gpu(mod(irand,nrand)+1)*rlz
 
       ! set particle velocity equal to nearby flow velocity approximately
       do jr=1,ny
@@ -112,6 +112,7 @@ subroutine part
       vpart_gpu(ind)=wv_gpu(1,jr,kr,3)
       wpart_gpu(ind)=wv_gpu(1,jr,kr,4)
 
+      irand = irand+1
     endif 
 
   enddo
